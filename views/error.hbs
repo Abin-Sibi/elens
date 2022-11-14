@@ -1,0 +1,23 @@
+<style>
+    .error-img{
+        height: 90vh;
+        background-image: url('/images/404-error.webp');
+  background-size: cover;
+    }
+  .home-btn{
+    margin-top: 500px;
+    margin-left: 700px;
+    border-radius: 10px;
+    height: 50px;
+  }
+</style>
+<div class="error-img">
+    <div >
+      {{#if user}}
+            <a href="/user-home"><button class="home-btn text-center text-white bg-dark">Goback to Home</button></a> 
+            {{else}}
+            <a href="/admin"><button class="home-btn text-center text-white bg-dark">Goback to Home</button></a>
+      {{/if}}
+    </div>
+   
+</div>

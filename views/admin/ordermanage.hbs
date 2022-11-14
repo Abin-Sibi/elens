@@ -1,0 +1,109 @@
+ <div class="height-100 bg-light">
+ 
+ <div class="container">
+<table class="table" id="orderTable">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Status</th>
+          <th>Shipping Address</th>
+          <th>Total Amount</th>
+          <th>Payment mode</th>
+          <th>OrderDetails</th>
+          <th>Save</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each myorder}}
+        <tr>
+             <td>{{this._id}}</td>
+             <td>
+              <form action="/admin/edit-status/{{this._id}}" method="post">
+                <select class="" name="status" id="status">
+                        <option value="" >{{this.status}}</option>
+                        <option  value="cancelled">cancelled</option>
+                        <option value="delivered">delivered</option>
+                        <option value="shipped">shipped</option>
+                        <option  value="placed">placed</option>
+                      </select>
+             </td>
+             <td>{{this.deliveryDetails.address}},<br>{{this.deliveryDetails.pin}},<br>{{this.deliveryDetails.city}}</td>
+             <td>{{this.totalAmount}}</td>
+             <td>{{this.paymentMode}}</td>
+               <td>
+            <a href="/admin/view-order-details/{{this._id}}" class="btn btn-success"
+              >View Details</a>
+          </td>
+             <td>
+              {{#if do}}
+              {{this.status}}
+              {{else}}
+            <button class="btn btn-success" type="submit"
+             >Save Status</button>
+             {{/if}}
+          </td>
+
+              </form>
+             
+
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>      
+
+ </div>
+  </div>
+
+
+ {{!-- <script>
+  $(document).ready(function () {
+    // Setup - add a text input to each footer cell
+    $('#orderTable tfoot th').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+ 
+    // DataTable
+    var table = $('#orderTable').DataTable({
+      dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+        initComplete: function () {
+            // Apply the search
+            this.api()
+                .columns()
+                .every(function () {
+                    var that = this;
+ 
+                    $('input', this.footer()).on('keyup change clear', function () {
+                        if (that.search() !== this.value) {
+                            that.search(this.value).draw();
+                        }
+                    });
+                });
+        },
+    });
+});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+<style>
+  tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+ </script> --}}

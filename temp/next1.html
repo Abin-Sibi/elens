@@ -1,0 +1,241 @@
+
+
+  <!doctype html>
+<html lang="en">
+<title>eLens</title>
+<link href="/images/s-initial-logo-glasses-design-600w-1444107956.webp" rel="icon">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  {{!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script> --}}
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script> 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <title></title>
+</head>
+
+<body>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.css"
+  integrity="sha512-+VDbDxc9zesADd49pfvz7CgsOl2xREI/7gnzcdyA9XjuTxLXrdpuz21VVIqc5HPfZji2CypSbxx1lgD7BgBK5g=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="height-100 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+
+      </div>
+
+      <div class="col-md-6 main" id="error">
+
+        <form action="/admin/add-product" enctype="multipart/form-data" method="post" id="form">
+          {{#if signupErr}}
+          <p class="error">{{signupErr}}</p>
+          {{/if}}
+          <h1> Add New Lens</h1>
+          <label>Product Name</label>
+          <input class="box" type="text" name="productname" id="productname" placeholder="Product-Name" required /><br>
+
+          <label for="cars">Choose a category:</label>
+
+          <select name="category" id="category">
+            {{#each data}}
+            <option value="{{this.name}}">{{this.name}}</option>
+            {{/each}}
+          </select><br>
+          <label>Put Discription</label>
+          <input class="box" type="text" name="desc" id="desc" placeholder="Description " required /><br>
+
+          <label>Enter Stock</label>
+          <input class="box" type="number" name="stock" id="stock" placeholder="Stock " required /><br>
+
+          <label>Enter Price</label>
+          <input class="box" type="number" name="price" id="price" placeholder="Price " required /><br>
+
+          <input class="box" type="number" value=0 name="offerPrice" id="offerPrice" placeholder="0" hidden /><br>
+
+          <input class="form-control" type="file" name="image" id="id_image1" onchange="viewimage(event)"
+            required /><br>
+          <img src="/product-image/{{product._id}}.png" alt="" style="width:100px;height:auto" id="view">
+
+          {{!-- ///////////crop/////////////// --}}
+          <div id="crop">
+            <div class="vald-info" id="info"></div>
+            <h5 class="error_form text-danger" id="image1_error_message"></h5>
+            <div style="display: flex">
+              <div id="image-box1" class="image-container clr" style="height: 300px; width: 20%"></div>
+              <button type="button" class="btn btneds bg-success" id="crop-btn1"
+                style=" margin-top: 10px; display: none; width: 50%; margin: 20rem 0rem 0rem 0rem;">crop</button>
+            </div>
+          </div>
+          <br>
+          <input class="form-control" type="file" name="image1" id="image1" onchange="viewimage1(event)" required /><br>
+          <img src="/product-image/{{product._id}}1.png" alt="" style="width:100px;height:auto" id="view1">
+
+
+          <input class="form-control" type="file" name="image2" id="image2" onchange="viewimage2(event)" required /><br>
+          <img src="/product-image/{{product._id}}2.png" alt="" style="width:100px;height:auto" id="view2">
+
+
+          <input class="form-control" type="file" name="image3" id="image3" onchange="viewimage3(event)" required /><br>
+          <img src="/product-image/{{product._id}}3.png" alt="" style="width:100px;height:auto" id="view3">
+
+
+          <br>
+          <input type="submit" id="submit" name="submit" value="submit" /><br>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function viewimage(event) {
+    document.getElementById('view').src = URL.createObjectURL(event.target.files[0])
+  }
+  function viewimage1(event) {
+    document.getElementById('view1').src = URL.createObjectURL(event.target.files[0])
+  }
+  function viewimage2(event) {
+    document.getElementById('view2').src = URL.createObjectURL(event.target.files[0])
+  }
+  function viewimage3(event) {
+    document.getElementById('view3').src = URL.createObjectURL(event.target.files[0])
+  }
+
+  /////////////for image1///////////////////
+
+  const imagebox1 = document.getElementById("image-box1");
+  const crop_btn1 = document.getElementById("crop-btn1");
+  const input1 = document.getElementById("id_image1");
+
+  // When user uploads the image this event will get triggered
+  input1.addEventListener("change", () => {
+    // Getting image file object from the input variable
+    const img_data1 = input1.files[0];
+    // createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
+    // The new object URL represents the specified File object or Blob object.
+    const url1 = URL.createObjectURL(img_data1);
+    // Creating a image tag inside imagebox which will hold the cropping view image(uploaded file) to it using the url created before.
+    imagebox1.innerHTML = `<img src="${url1}" id="image1" style="width:100%;">`;
+    // Storing that cropping view image in a variable
+    const image1 = document.getElementById("image1");
+    // Displaying the image box
+    document.getElementById("image-box1").style.display = "block";
+    // Displaying the Crop buttton
+    document.getElementById("crop-btn1").style.display = "block";
+    // Hiding the Post button
+    document.getElementById("view").style.display = "block";
+    const cropper1 = new Cropper(image1, {
+      autoCropArea: 1,
+      viewMode: 1,
+      scalable: false,
+      zoomable: false,
+      movable: false,
+      minCropBoxWidth: 50,
+      minCropBoxHeight: 50,
+    });
+    // When crop button is clicked this event will get triggered
+    crop_btn1.addEventListener("click", () => {
+      // This method coverts the selected cropped image on the cropper canvas into a blob object
+      cropper1.getCroppedCanvas().toBlob((blob) => {
+        // Gets the original image data
+        let fileInputElement1 = document.getElementById("id_image1");
+        // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
+        let file1 = new File([blob], img_data1.name, {
+          type: "image/*",
+          lastModified: new Date().getTime(),
+        });
+        // Create a new container
+        let container1 = new DataTransfer();
+        // Add the cropped image file to the container
+        container1.items.add(file1);
+        // Replace the original image file with the new cropped image file
+        fileInputElement1.files = container1.files;
+        document.getElementById("view").src = URL.createObjectURL(
+          fileInputElement1.files[0]
+        );
+        // Hide the cropper box
+        document.getElementById("image-box1").style.display = "none";
+        // Hide the crop button
+        document.getElementById("crop-btn1").style.display = "none";
+
+      });
+    });
+  });
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js"
+  integrity="sha512-ZK6m9vADamSl5fxBPtXw6ho6A4TuX89HUbcfvxa2v2NYNT/7l8yFGJ3JlXyMN4hlNbz0il4k6DvqbIW5CCwqkw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ 
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="/javascripts/script.js"></script>
+
+
+</body>
+
+</html>
+
+
+<script>
+    function viewOffer() {
+
+        let hi = document.getElementById('hello')
+        hi.innerHTML = ' '
+        $.ajax({
+            url: '/rewards',
+            method: 'get',
+            success: (cop) => {
+                console.log(cop)
+
+
+
+                cop.forEach((element) => {
+
+                    hi.innerHTML += `
+                  ${(cop[0].fivestat) ? `
+    <div  class="couponbody mb-3 pb-3" style="border-radius:8px;">
+                    <h2 class="p-1" style="background-color: black;color:aliceblue;border-radius:8px; text-align: center;">COUPON</h2>
+                    <div style="height: 30px; width: 200px;text-align: center;">
+                    
+                    </div>
+                    <center><h4 class="code text-success">${element.couponcode}</h4></center>
+                    <h5 class="date">Expiry date:<br><small>${element.fromdate} to ${element.todate} </small></h5>
+                    </div> `
+                            : `<center>NO REWARDS YET!!!</center>`
+                    
+                }`
+                })
+
+            }
+            
+        })
+        
+    }
+
+</script>

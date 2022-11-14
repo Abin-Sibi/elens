@@ -1,0 +1,61 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<section class="" style="background-color: #eee;">
+  <div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-normal mb-0 text-black">My Wishlist</h3>
+          
+        </div>
+         {{#each product}}
+        
+        <div class="card rounded-3 mb-4">
+          <div class="card-body p-4">
+            <div class="row d-flex justify-content-between align-items-center">
+              <div class="col-md-2 col-lg-2 col-xl-2">
+                <img
+                  src="/product-image/{{this.product._id}}.png"
+                  class="img-fluid rounded-3" >
+              </div>
+              <div class="col-md-3 col-lg-3 col-xl-3">
+                <p class="lead fw-normal mb-2">{{this.product.productname}}</p><br>
+                <p class="lead fw-normal mb-2">{{this.product.desc}}</p>
+                
+              </div>
+              
+              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                <h5 class="mb-0">{{this.product.price}}</h5>
+              </div>
+              <div>
+                <button class="ms-3 text-danger mt-3" onclick="removeProduct('{{this.product._id}}')">Remove</button>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+
+      {{/each}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+    function removeProduct(proId){
+        $.ajax({
+            url:'/wishlist_removeproduct/'+proId,
+            method: 'get',
+            success: (response)=>{
+                console.log(response, "respons")
+                if(response.status){
+                    
+                    let count = $('#wishList-count').html()
+                    count = parseInt(count)-1
+                    $('#wishList-count').html(count)
+            }
+            }
+        })
+    }
+</script>

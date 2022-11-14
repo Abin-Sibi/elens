@@ -1,0 +1,348 @@
+{{!--
+<script src="/paypal-helper.js"></script> --}}
+
+<style>
+  .clr {
+    display: none !important;
+  }
+
+  .sft {
+    display: block !important;
+  }
+</style>
+<div class="container-fluid" style="margin-top: 10rem;">
+  <div class="page-header text-center">
+    <h1>Checkout</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <form action="" id="order-form" name="order-form" class="">
+
+        <div class="list-group-item ">
+          <div class="list-group-item-heading">
+            <input type="text" name="userId" id="" value="{{user._id}}" hidden>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6 w-100 ">
+                  <div class="border border-5 ps-5">
+                    <h3>Select Shipping address</h3>
+                    {{#each address}}
+                    <div class="list-group-item">
+                      <div class="list-group-item-heading">
+                        <div class="row radio">
+                          <div class="col-xs-3">
+                            <label data-toggl-e="collapse" data-target="#newcard">
+                              <input type="radio" name="address" id="address" value="{{this._id}}" required>
+                              {{this.name}},<br>{{this.address}},<br>{{this.city}},{{this.pin}},<br>{{this.state}}<br>{{this.phone}}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {{/each}}
+                  </div>
+                  <br>
+                  <div>
+                    {{#if cart.setCoup}}
+                    <h3><b id="total">Coupon discount:<span id="totprice">{{total.coupdisc}}</span></b></h3>
+                    {{/if}}
+                    <h3><b id="total">Offer amount:<span id="totprice">{{total.offerprice}}</span></b></h3>
+                    <h3><b id="total">Total Amount:<span id="totprice">{{total.totalprice}}</span></b></h3>
+                  </div>
+                  <div class="border border-5 ps-5">
+                    <h3>Payment</h3>
+                    <div class="list-group-item">
+                      <div class="list-group-item-heading">
+                        <div class="row radio">
+                          <div class="col-xs-3">
+                            <label data-toggl-e="collapse" data-target="#newcard">
+                              <input type="radio" name="payment-mode" id="razorpay" value="razorpay" onclick="toggle()">
+                              RazorPay
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group-item">
+                      <div class="list-group-item-heading">
+                        <div class="row radio">
+                          <div class="col-xs-3">
+                            <label>
+                              <input type="radio" name="payment-mode" class="COD" id="COD" value="COD"
+                                onclick="toggle()">
+                              COD
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group-item">
+                      <div class="list-group-item-heading">
+                        <div class="row radio">
+                          <div class="col-xs-3">
+                            <label>
+                              <input type="radio" name="payment-mode" class="wallet" value="wallet" onclick="toggle()">
+                              wallet(<span id="walletprice">{{user.wallet}}</span>)
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group-item">
+                      <div class="list-group-item-heading">
+                        <div class="row radio">
+                          <div class="col-xs-3">
+                            <label>
+                              <input type="radio" name="payment-mode" id="paypal" value="paypal" onclick="toggle1()">
+                              {{!--
+                              <script
+                                src="https://www.paypal.com/sdk/js?client-id=AbaxL24myMdj5LiNmQlQ1VrFRJ6hBu82puwpc4QajyyWBwBWlGwtEcBlr6YoDDqp5i4RaHvqoNyklBrl&currency=USD"></script>
+                              --}}
+
+                              {{!-- <div id="paypal-button-container"></div> --}}
+                              Paypal
+                            </label>
+                            <script
+                              src="https://www.paypal.com/sdk/js?client-id=AbaxL24myMdj5LiNmQlQ1VrFRJ6hBu82puwpc4QajyyWBwBWlGwtEcBlr6YoDDqp5i4RaHvqoNyklBrl&currency=USD"
+                              data-namespace="paypal_sdk"></script>
+                            <!-- Set up a container element for the button -->
+                            {{!-- <button class="btn btn-primary btn-lg btn-block" type="submit" id="placeorder">Place
+                              Order</button> --}}
+                            <div class="col-lg-12 form-group">
+                              <div class="btn clr" id="paypal-button-container"></div>
+                              <button class="btn btn-dark clr" type="submit" id="placeorder">Place order</button>
+                            </div>
+                            {{!-- <div id="paypal-button-container"></div> --}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="well my-3">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="card mb-4">
+        <div class="card-body p-4 d-flex flex-row">
+
+          {{#if cart.setCoup}}
+          <span>Applied</span>
+          {{else}}
+          <form method="post" action="/apply-coupon" id="formcoup">
+            <div class="form-outline flex-fill">
+              <input type="text" class="form-control form-control-large" name="coupon" id="coupcode"
+                class="form-control form-control-lg" />
+              <label class="form-label" for="form1">Discound code</label>
+            </div>
+            <button type="submit" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
+          </form>
+          {{/if}}
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <form action="/new-address" method="post" id="form" style="width: 1000px;">
+        <div class="col-md-6 border border-5">
+          <br>
+
+          <div class="col-xs-9"> <br>
+
+            <div class="form-group">
+              <h2>Add new Address</h2>
+              <label for="inputname">Name</label>
+              <input type="text" class="form-control form-control-large" name="name" id="inputname"
+                placeholder="Enter name">
+            </div>
+            <div class="form-group">
+              <label for="inputAddress1">Street address 1</label>
+              <input type="text" class="form-control form-control-large" name="address" id="inputAddress"
+                placeholder="Enter address">
+            </div>
+
+            <div class="form-group">
+              <label for="inputPhone">Phone:</label>
+              <input type="text" class="form-control form-control-large" name="phone" id="inputPhone"
+                placeholder="Enter Phone no:">
+            </div>
+
+            <div class="row">
+              <div class="col-xs-3">
+                <div class="form-group">
+                  <label for="inputZip">PIN Code</label>
+                  <input type="number" class="form-control form-control-small" name="pin" id="pin"
+                    placeholder="Enter pin">
+                </div>
+              </div>
+              <div class="col-xs-9">
+                <div class="form-group">
+                  <label for="inputCity">City</label>
+                  <input type="text" class="form-control" id="inputCity" name="city" placeholder="Enter city">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputState" class="control-label">State</label>
+              <select class="form-control form-control-large" name="state" id="state">
+                <option>Select state</option>
+                <option>KERALA</option>
+                <option>KARNATAKA</option>
+                <option>MAHARASHTRA</option>
+                <option>TAMIL NADU</option>
+              </select>
+            </div>
+
+          </div>
+          <input type="submit" class="btn btn-primary" id="submit" name="submit" value="submit" /><br><br>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <h6 id="a1" hidden>{{user.name}}</h6>
+  <h6 id="a2" hidden>{{user.email}}</h6>
+  <h6 id="a3" hidden>{{user.phone}}</h6>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+  //let total=document.getElementById('totprice');
+  paypal_sdk.Buttons({
+    // Sets up the transaction when a payment button is clicked
+    createOrder: (data, actions) => {
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: {{ total.offerprice }}// Can also reference a variable or function
+          }
+  }]
+      });
+    },
+  // Finalize the transaction after payer approval
+  onApprove: (data, actions) => {
+    return actions.order.capture().then(function (orderData) {
+      // Successful capture! For dev/demo purposes:
+      console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+      const transaction = orderData.purchase_units[0].payments.captures[0];
+      alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+      $(document).ready(function () {
+        $("#placeorder").trigger("click");
+      })
+      // When ready to go live, remove the alert and show a success message within this page. For example:
+      // const element = document.getElementById('paypal-button-container');
+      // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+      // Or go to another URL:  actions.redirect('thank_you.html');
+    });
+  }
+  }).render('#paypal-button-container');
+</script>
+
+<script>
+  let name = document.getElementById('a1').innerHTML
+  let email = document.getElementById('a2').innerHTML
+  let phone = document.getElementById('a3').innerHTML
+  console.log(name)
+  $('#order-form').submit((e) => {
+    e.preventDefault()
+    $.ajax({
+
+      url: '/place-order',
+      method: 'post',
+      data: $('#order-form').serialize(),
+      method: 'post',
+      success: (response) => {
+        console.log(response)
+        alert(response)
+        if (response.codSuccess) {
+          location.href = '/placed'
+        } else {
+          razorpayPayment(response)
+        }
+      }
+    })
+  });
+  function razorpayPayment(order) {
+    var options = {
+      "key": "rzp_test_bwpnuyv9GlsW4W", // Enter the Key ID generated from the Dashboard
+      "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      "currency": "INR",
+      "name": "eLens",
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "handler": function (response) {
+        verifyPayment(response, order)
+      },
+      "prefill": {
+        "name": name,
+        "email": email,
+        "contact": phone
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+  function verifyPayment(payment, order) {
+    console.log('njan ethi')
+    $.ajax({
+      url: '/verify-payment',
+      method: 'post',
+      data: {
+        payment,
+        order
+      },
+      success: (response) => {
+        if (response.status) {
+          location.href = "/placed";
+        } else {
+          alert('There is an error in your payment procedure')
+        }
+      }
+    })
+  }
+
+  function toggle() {
+    const list = document.getElementById("placeorder").classList;
+    const list2 = document.getElementById("paypal-button-container").classList;
+    list.add("sft");
+    list2.remove("sft");
+
+  }
+  function toggle1() {
+    const list = document.getElementById("placeorder").classList;
+    const list2 = document.getElementById("paypal-button-container").classList;
+    list2.add("sft");
+    list.remove("sft");
+  }
+
+
+  let walletcheck = document.querySelector('.wallet')
+  let cod = document.querySelector('.COD')
+  let walletprice = document.getElementById('walletprice').innerText
+  let totalprice = document.getElementById('totprice').innerText
+
+  console.log(walletcheck)
+  console.log(walletprice)
+  console.log(totalprice)
+
+
+  walletcheck.onclick = (e) => {
+    if (totalprice > walletprice) {
+      swal('Insufficient Balance')
+      cod.click()
+    }else{
+      toggle()
+    }
+  }
+
+</script>

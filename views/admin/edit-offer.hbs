@@ -1,0 +1,46 @@
+ <div class="height-100 bg-light">
+<div class="main_div">
+
+  <h2 class="mt-5"><b>Enter the Discount percentage</b></h2>
+  <form action="/admin/addoffer" method="post">
+<label class="cars fs-3 mt-5">Choose a category:</label>
+
+  <select class="box1 w-50 h-23" name="category" id="category">
+    {{#each category}}
+    <option  value="{{this.name}}">{{this.name}}</option>
+    
+  </select><br>
+
+  <label class="fs-3 mt-2">Discount Percentage:</label>
+
+  <input class="box1 h-23 w-50 mt-4" type="number" name="discount" id="discount" value="{{this.offer}}" /><br>
+  {{/each}}
+    <button type="submit" class="btn btn-success"><a class="text-white">Submit</a></button>
+  </form>
+</div>
+</div>
+
+
+<style>
+.main_div{
+  text-align: center;
+  border-radius: 10px;
+  height: 350px;
+  width: 800px;
+  color: white;
+  background-color: rgb(66, 66, 66);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.box1{
+  border-radius: 10px;
+}
+.btn{
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+}
+</style>

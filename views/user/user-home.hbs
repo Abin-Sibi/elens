@@ -1,0 +1,491 @@
+<!-- start banner Area -->
+<section class="banner-area sec">
+	<div class="container ">
+		<div class="row fullscreen align-items-center justify-content-start" style="height: 800px;">
+			<div class="col-lg-12">
+				<div class="active-banner-slider owl-carousel">
+					<!-- single-slide -->
+					<div class="row single-slide align-items-center d-flex ">
+						<div class="col-lg-5 col-md-6">
+							<div class="banner-content">
+								<h1>John Jacobs New <br>Collection!</h1>
+								<p>Experience eyewear in a whole new way: Visit your nearest store
+and treat yourself to 5000+ eyewear styles..</p>
+								
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div id="carouselExampleIndicators" class="carousel slide my-5" data-bs-ride="true">
+
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/images/carr7.png" style="height: 40vh;width: 100vh;" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="/images/carr6.png" style="height: 50vh;width: 100vh;" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="/images/carr5.png" style="height: 50vh;width: 100vh;" class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+						</div>
+					</div>
+					<!-- single-slide -->
+					<div class="row single-slide">
+						<div class="col-lg-5">
+							<div class="banner-content">
+								<h1>Nike New <br>Collection!</h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+									incididunt ut labore et
+									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+								<div class="add-bag d-flex align-items-center">
+									<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+									<span class="add-text text-uppercase">Add to Bag</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="banner-img">
+								<img class="img-fluid" src="/images/carr5.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End banner Area -->
+
+<!-- start product Area -->
+<section class="owl-carousel active-product-area section_gap">
+	<!-- single product slide -->
+	<div class="single-product-slider">
+		<div class="container">
+			<div class="row">
+				<!-- single product -->
+				{{#each product}}
+				<div class="col-lg-3 col-md-6">
+					<div class="single-product">
+						<img class="img-fluid" src="/product-image/{{this._id}}.png" alt="">
+						<div class="product-details">
+							<h6>{{this.productname}}</h6>
+							<div class="price">
+								{{#if this.offerPrice}}
+								<h6>{{this.offerPrice}}</h6>
+								<h6 class="l-through">{{this.price}}</h6>
+								{{else}}
+								<h6>{{this.price}}</h6>
+								{{/if}}
+							</div>
+							<div class="prd-bottom">
+
+								<a id="cartcount" onclick="addToCart('{{this._id}}')" class="social-info">
+									<span class="ti-bag"></span>
+									<p class="hover-text">add to bag</p>
+								</a>
+
+								{{#if this.wishlisted }}
+								<a onclick="addToWishlist('{{this._id}}')" class="social-info btn_prod">
+									<span id="{{this._id}}wishList" class="lnr lnr-heart wish"></span>
+									<p class="hover-text">Wishlist</p>
+								</a> {{else}}
+								<a onclick="addToWishlist('{{this._id}}')" class="social-info btn_prod">
+									<span id="{{this._id}}wishList" class="lnr lnr-heart "></span>
+									<p class="hover-text">Wishlist</p>
+								</a>
+								{{/if}}
+								<a href="/view-product/{{this._id}}" class="social-info btn_prod">
+									<span class="lnr lnr-move"></span>
+									<p class="hover-text">view</p>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{/each}}
+				<!-- single product -->
+			</div>
+		</div>
+	</div>
+	<!-- single product slide -->
+	<div class="single-product-slider">
+
+	</div>
+</section>
+
+<div class="search-div">
+	<div class="row" id="search-div">
+	</div>
+</div>
+
+<style>
+	.wish {
+		color: red;
+	}
+
+	.search-div {
+		position: absolute;
+		display: none;
+
+		top: 85px;
+	}
+
+	.search-div-active {
+		transition: width 2s, height 4s;
+		width: 90%;
+		justify-self: center;
+		left: 5%;
+		justify-items: center;
+		position: absolute;
+		display: flex;
+		background-color: rgba(139, 225, 201, 0.486);
+		top: 85px;
+
+		z-index: 4;
+		padding: 10px;
+		border-radius: 30px;
+		box-shadow: 0px 0px 5px 5px rgb(0, 0, 0, 0.2);
+	}
+
+	.sec {
+		z-index: -1;
+	}
+
+	.sec1 {
+		filter: blur(4px);
+		-webkit-filter: blur(4px);
+	}
+</style>
+
+<script>
+	function addToWishlist(proId){
+    let id = proId+'wishList'
+    var btn = document.getElementById(id)
+    $.ajax({
+        url: '/add-to-wishlist/'+proId,
+        method: 'get',
+        success:(response)=>{
+            if(response.status){
+                console.log(response.wishlist)
+                if(response.wishlist){
+                    btn.classList.add('wish')
+                }else{
+                    btn.classList.remove('wish')
+                }
+            }
+      }
+    })
+}
+
+    $("#search1").on('change keyup paste', function () {
+    let div = document.querySelector(".search-div");
+    let bg = document.querySelector(".sec");
+    let val = $('#search1').val();
+   
+    if (val) {
+        div.classList.add('search-div-active')
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        bg.classList.add('sec1')
+    } else {
+        div.classList.remove('search-div-active')
+        bg.classList.remove('sec1')
+    }
+    $.ajax({
+        url: "/search?val=" + val,
+        method: 'get',
+        success: (data) => {
+           
+            if (data != '') {
+                document.getElementById('search-div').innerHTML = `${data.map((product) => {
+                    return `
+				
+				<div class="col-lg-3 col-md-6">
+					<div class="single-product">
+						<img class="img-fluid" src="/product-image/${product._id}.png" alt="">
+						<div class="product-details">
+							<h6>${product.productname}</h6>
+							<div class="price">
+								
+								<h6>${product.price}</h6>
+								
+							</div>
+							<div class="prd-bottom">
+
+								<a id="cartcount" onclick="addToCart('${product._id}')" class="social-info">
+									<span class="ti-bag"></span>
+									<p class="hover-text">add to bag</p>
+								</a>
+
+								<a href="/view-product/${product._id}" class="social-info btn_prod">
+									<span class="lnr lnr-move"></span>
+									<p class="hover-text">view</p>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>`
+                
+                })}`
+            } else {
+                document.getElementById('search-div').innerHTML= '<div class="nopro">No Product Found</div>'
+            }    
+      }
+})
+});
+</script>
+
+
+{{!-- <div class="pop__up__box hide">
+	<div class="the__box">
+		<center>
+			<h3>Added to Cart !</h3>
+		</center>
+	</div>
+	<div class="the__bottom__div mt-3">
+		<center><a href="" class="btn btn-success">Hurray !</a></center>
+	</div>
+</div>
+<div class="search-div">
+	<div class="row" id="search-div">
+	</div>
+</div> --}}
+<!-- start footer Area -->
+
+<!-- End footer Area -->
+
+
+{{!-- <style>
+	.pop__up__box {
+		position: fixed;
+		top: 30%;
+		left: 32%;
+		justify-content: center;
+		height: 200px;
+		width: 30vw;
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		background: linear-gradient(30deg, rgb(14, 35, 42), rgb(3, 77, 92)) !important;
+		border-radius: 10px;
+		box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.5), -2px -2px 5px 1px rgba(0, 0, 0, 0.5);
+	}
+
+	.the__box h3 {
+		font-size: 26px;
+		font-weight: 700;
+		color: whitesmoke;
+		background: linear-gradient(30deg, rgb(14, 35, 42), rgb(3, 77, 92)) !important;
+	}
+
+	.hide {
+		display: none;
+	}
+</style> --}}
+
+
+</body>
+
+</html>
+
+{{!--
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8">
+	</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+	integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"   /> --}}
+{{!-- <style>
+	body {
+		background: linear-gradient(30deg, rgb(249, 247, 247), rgb(115, 147, 147)) !important;
+	}
+
+	.prod_card {
+		background: linear-gradient(130deg, rgb(14, 35, 42), rgb(84, 203, 227)) !important;
+	}
+
+	.btn_prod {
+		background: linear-gradient(30deg, rgb(14, 35, 42), rgb(3, 77, 92)) !important;
+	}
+
+	.wish {
+		color: red;
+	}
+
+	.search-div {
+		position: absolute;
+		display: none;
+
+		top: 85px;
+	}
+
+	.search-div-active {
+		transition: width 2s, height 4s;
+		width: 90%;
+		justify-self: center;
+		left: 5%;
+		justify-items: center;
+		position: absolute;
+		display: flex;
+		background-color: rgb(234, 67, 67);
+		top: 85px;
+
+		z-index: 4;
+		padding: 10px;
+		border-radius: 30px;
+		box-shadow: 0px 0px 5px 5px rgb(0, 0, 0, 0.2);
+	}
+
+	.sec {
+		z-index: -1;
+	}
+
+	.sec1 {
+		filter: blur(4px);
+		-webkit-filter: blur(4px);
+	}
+</style> --}}
+
+{{!-- <div class="container mt-5 sec">
+	<!-- Example single danger button -->
+	<div class="btn-group">
+		<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+			aria-expanded="false">
+			All
+		</button>
+		<div class="dropdown-menu">
+
+			{{#each category}}
+			<a class="dropdown-item" href="/category/{{this.name}}">{{this.name}}</a>
+			{{/each}}
+		</div>
+	</div>
+	<div class="row">
+		{{#each product}}
+		<div class="card prod_card ms-4 mt-5 border border-dark border-3"
+			style="width: 18rem; background-color:#141264  ;">
+			<img src="/product-image/{{this._id}}.png" class="card-img-top mt-3" alt="Card image cap">
+			<div class="card-body">
+				<h5 class="card-title text-white">{{this.productname}}</h5>
+
+				{{#if this.offerPrice}}
+				<h4 class="card-text text-white">₹ <span class="offerp">{{this.offerPrice}}</span></h4>
+				<p class="card-text text-white the_p">₹ <del class="original_p">{{this.price}}</del>{{#each
+					category}}<small>{{this.offer}}</small>{{/each}}</p>
+				{{else}}
+				<h4 class="card-text text-white"><span class="act_p">₹ {{this.price}}</span></h4>
+				{{/if}}
+				<div>
+					<a href="/view-product/{{this._id}}" class="btn btn_prod text-white">View Product</a>
+					<button style="border-radius: 5px;  height: 39px; width: 44px;" type="button" class="btn_prod"
+						id="cartcount" onclick="addToCart('{{this._id}}')">
+						<svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="currentColor"
+							class="bi bi-cart-plus-fill text-white" viewBox="0 0 16 16">
+							<path
+								d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z" />
+						</svg>
+					</button>
+					<p id="stockp" hidden>{{this.stock}}</p>
+					{{#if this.wishlisted }}
+					<button class="ms-auto mt-2 btn_prod" style="border-radius: 5px;  height: 39px; width: 44px;"
+						onclick="addToWishlist('{{this._id}}')"><i id="{{this._id}}wishList"
+							class="fa-solid fa-heart wish"></i></button>
+					{{else}}
+					<button class="ms-auto mt-2 btn_prod" style="border-radius: 5px;  height: 39px; width: 44px;"
+						onclick="addToWishlist('{{this._id}}')"><i id="{{this._id}}wishList"
+							class="fa-solid fa-heart"></i></button>
+					{{/if}}
+				</div>
+			</div>
+		</div>
+		{{/each}}
+	</div>
+</div>
+<div class="pop__up__box hide">
+	<div class="the__box">
+		<center>
+			<h3>Added to Cart !</h3>
+		</center>
+	</div>
+	<div class="the__bottom__div mt-3">
+		<center><a href="" class="btn btn-success">Hurray !</a></center>
+	</div>
+</div>
+<div class="search-div">
+	<div class="row" id="search-div">
+	</div>
+</div> --}}
+
+{{!-- <style>
+	.pop__up__box {
+		position: fixed;
+		top: 30%;
+		left: 32%;
+		justify-content: center;
+		height: 200px;
+		width: 30vw;
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		background: linear-gradient(30deg, rgb(14, 35, 42), rgb(3, 77, 92)) !important;
+		border-radius: 10px;
+		box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.5), -2px -2px 5px 1px rgba(0, 0, 0, 0.5);
+	}
+
+	.the__box h3 {
+		font-size: 26px;
+		font-weight: 700;
+		color: whitesmoke;
+		background: linear-gradient(30deg, rgb(14, 35, 42), rgb(3, 77, 92)) !important;
+	}
+
+	.hide {
+		display: none;
+	}
+</style> --}}
+
+<!--<script>
+
+    
+
+    function addToWishlist(proId){
+    let id = proId+'wishList'
+    var btn = document.getElementById(id)
+    $.ajax({
+        url: '/add-to-wishlist/'+proId,
+        method: 'get',
+        success:(response)=>{
+            if(response.status){
+                console.log(response.wishlist)
+                if(response.wishlist){
+                    btn.classList.add('wish')
+                }else{
+                    btn.classList.remove('wish')
+                }
+            }
+      }
+    })
+}
+</script>-->
+{{!-- </section> --}}

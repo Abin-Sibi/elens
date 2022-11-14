@@ -1,0 +1,159 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 text-center">
+                <div class="rounded mt-5" style="width: 85%; -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);">
+                    <div class="d-flex">
+                        <div class="ms-3 mt-3">
+                            <img src="/images/product-images/{{person._id}}.jpg"
+                                style="height: 200px;width: 200px;border-radius: 100px;" alt="">
+                        </div>
+                        <div class="ms-3 mt-5">
+                            <h1>Hello,</h1>
+                            <h1 class="ms-3">{{person.name}}</h1>
+                        </div>
+                    </div>
+                    <div>
+                        <p href="" class="btn btn-primary mt-5 w-75" onclick="changeProfile()">Change profile</p>
+                        <div class="changeProfile text-center border border-3 rounded w-75 ms-5" style="display: none;">
+                            <form action="/edit-profile/{{person._id}}" method="post" enctype="multipart/form-data">
+                                <input type="file" class="mt-3 text-center border"  name="profileImg" placeholder="imgae">
+                                <input type="text" class="mt-3 text-center border" name="name" value="{{person.name}}" style="height: 40px;border-radius: 20px;"><br><br>
+                                <input type="submit" value="Update" class="btn btn-primary">
+                            </form><br>
+                        </div><br>
+                    </div>
+                    <div>
+                        <p href="" class="btn btn-primary w-75" onclick="showPass()">Change password</p>
+
+                        <div class="password text-center border border-3 rounded w-75 ms-5" style="display: none;">
+                            <form action="/change-password" method="post">
+                                <input type="password" name="old" class="mt-3 text-center border"
+                                    style="height: 40px;border-radius: 20px;" placeholder="old password"><br>
+                                <input type="password" name="new" class="mt-3 text-center border"
+                                    style="height: 40px;border-radius: 20px;" placeholder="New password"><br>
+                                <input type="password" name="confirm" class="mt-3 text-center border"
+                                    style="height: 40px;border-radius: 20px;" placeholder="Confirm password"><br><br>
+                                <input type="submit" class="btn btn-primary" value="submit">
+                            </form><br>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary w-75 mb-3" href="/my-orders">my orders</a>
+                </div><br><br>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="rounded mt-5" style="width: 80%; -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);">
+                    <div style="padding-top: 30px;">
+                        <h5 class="ms-3">Personal Info:</h5>
+                        <hr>
+                        <p class="ms-4">Email: {{person.email}}</p>
+                        <p class="ms-4">Phone: {{person.phone}}</p>
+                    </div>
+
+                    <div>
+                        <p href="" class="btn btn-primary ms-4 w-75" onclick="showAddress()">Add address</p>
+
+                        <div class="address text-center border border-3" style="display: none;">
+                            <form action="/useraddress" method="post">
+                                <input class="mt-3 text-center border" style="height: 40px;border-radius: 20px;"
+                                    type="text" name="houseName" placeholder="House Name">
+                                <input class="mt-3 text-center border" style="height: 40px;border-radius: 20px;"
+                                    type="text" name="placeName" placeholder="Place Name">
+                                <input class="mt-3 mb-3 text-center border" style="height: 40px;border-radius: 20px;"
+                                    type="text" name="postOffice" placeholder="Post Office">
+                                <input class=" mb-3 text-center border" style="height: 40px;border-radius: 20px;"
+                                    type="text" name="pinCode" placeholder="PIN Code">
+                                <input type="submit" class="btn btn-primary w-75">
+                            </form><br>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        {{#each address}}
+                        <div class=" mt-4 w-75 ms-5 border border-info" style="border-radius: 10px;">
+                            <span href="" onclick="editAddress()" class="text-success me-3"
+                                style="margin-left: 200px;"><i class="fa-regular fa-pen-to-square"></i></span>
+                            <a href="/deleteAdress/{{this._id}}" class="text-danger"><i
+                                    class="fa-solid fa-trash"></i></a>
+                            <h6 class="ms-5 pt-2">{{this.houseName}}</h6>
+                            <h6 class="ms-5">{{this.placeName}}</h6>
+                            <h6 class="ms-5">{{this.postOffice}}</h6>
+                            <h6 class="ms-5 pb-2">{{this.pinCode}}</h6>
+                            <div class="changeAddress text-center border border-3" style="display: none;">
+                                <form action="/edit-user-address/{{this._id}}" method="post">
+                                    <input class="mt-3 text-center border" style="height: 40px;border-radius: 20px;"
+                                        type="text" name="houseName" value="{{this.houseName}}">
+                                    <input class="mt-3 text-center border" style="height: 40px;border-radius: 20px;"
+                                        type="text" name="placeName" value="{{this.placeName}}">
+                                    <input class="mt-3 mb-3 text-center border"
+                                        style="height: 40px;border-radius: 20px;" type="text" name="postOffice"
+                                        value="{{this.postOffice}}">
+                                    <input class=" mb-3 text-center border" style="height: 40px;border-radius: 20px;"
+                                        type="text" name="pinCode" value="{{this.pinCode}}">
+                                    <input type="submit" class="btn btn-primary w-75">
+                                </form><br>
+                            </div>
+                        </div>
+                        {{/each}}
+
+                    </div><br>
+                </div><br>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    let profile = document.querySelector('.changeProfile')
+    isPro = true
+    function changeProfile() {
+        if (isPro) {
+            profile.style.display = "block"
+            isPro = false
+        } else {
+            profile.style.display = "none"
+            isPro = true
+        }
+    }
+
+    let edit = document.querySelector('.changeAddress')
+    isEdit = true
+    function editAddress() {
+        if (isEdit) {
+            edit.style.display = "block"
+            isEdit = false
+        } else {
+            edit.style.display = "none"
+            isEdit = true
+        }
+    }
+
+    let usersSection = document.querySelector('.address')
+    isShow = true
+    function showAddress() {
+        if (isShow) {
+            usersSection.style.display = "block"
+            isShow = false
+        } else {
+            usersSection.style.display = "none"
+            isShow = true
+        }
+    }
+
+    let changePass = document.querySelector('.password')
+    isChange = true
+    function showPass() {
+        console.log(isChange)
+        if (isChange) {
+            changePass.style.display = "block"
+            isChange = false
+        } else {
+            changePass.style.display = "none"
+            isChange = true
+        }
+    }
+</script>

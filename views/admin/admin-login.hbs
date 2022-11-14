@@ -1,0 +1,60 @@
+{{!-- <div class="container">
+    <div class="row">
+
+        <div class="col-md-6 main">
+
+            <form action="/admin/adminlogin" method="post">
+                   {{#if loginErr}}
+                   <p class="error">{{loginErr}}</p>
+                   {{/if}}
+                <h1> Admin Login </h1>
+                
+                <input class="box" type="email" name="email" id="email" placeholder="E-Mail " required /><br>
+
+                <input class="box" type="password" name="password" id="password" placeholder="Password " required /><br>
+                <br>
+                <input type="submit" id="submitDetails" name="submitDetails" value="Submit" /><br>
+
+            </form>
+
+        </div>
+    </div>
+</div> --}}
+
+
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mb-md-5 mt-md-4 pb-5">
+             <form action="/admin/adminlogin" method="post">
+                   {{#if adminLoginError}}
+                   <p class="error">{{adminLoginError}}</p>
+                   {{/if}}
+              <h2 class="fw-bold mb-2 text-uppercase">Admin Login</h2>
+               <br>
+              <div class="form-outline form-white mb-4">
+                <input type="email" id="email" name="email" class="form-control form-control-lg" />
+                <label class="form-label" for="email">Email</label>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <input type="password" id="password" name="password" class="form-control form-control-lg" />
+                <label class="form-label" for="password">Password</label>
+              </div>
+
+              
+
+              <button class="btn btn-outline-light btn-lg px-5" id="submitDetails" name="submitDetails" type="submit">Login</button>
+
+            </div>
+           </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

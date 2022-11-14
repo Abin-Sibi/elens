@@ -1,0 +1,78 @@
+router.post(
+"/change-product-quantity",
+verifyLoggin,
+async (req, res, next) => {
+console.log(req.body);
+
+try {
+let price = 0;
+let offerPrice = 0;
+let total = 0;
+let productId = req.body.product;
+let quantity = req.body.quantity;
+let count = req.body.count;
+console.log("count", count);
+productHelper
+.getProductDetails(req.body.product)
+.then((response) => {
+price = response.price;
+offerPrice = response?.offerPrice;
+})
+.catch(() => {
+console.log("in offer price");
+res.redirect("/error");
+});
+
+//-------------------------------------------------------------------
+
+await userHelpers.getMaxStock(productId).then(async (product) => {
+if (count <= 1) { 
+    if (Number(quantity)==Number(product.stock)) 
+    { res.json({ updation: false }); } 
+    else {
+    await userHelpers.changeProductQuantity(req.body).then(async (response)=> {
+    let products = await userHelpers.getCartProduct(
+    req.session.user._id
+    );
+    userHelpers.cartTotal(req.session.user._id, products)
+    .then((total) => {
+    // console.log("--------inc-----",total);
+
+    response.total = total;
+    response.price = price;
+    response.offerPrice = offerPrice;
+
+    response.updation = true;
+
+    res.json(response);
+    });
+    });
+    }
+    } else {
+    await userHelpers.changeProductQuantity(req.body).then(async (response)=> {
+    let products = await userHelpers.getCartProduct(
+    req.session.user._id
+    );
+    userHelpers
+    .cartTotal(req.session.user._id, products)
+    .then((total) => {
+    console.log("--------dec-----", total);
+
+    response.total = total;
+    response.price = price;
+    response.offerPrice = offerPrice;
+
+    response.updation = true;
+
+    res.json(response);
+    });
+    });
+    }
+    });
+    } catch (err) {
+    console.log(err);
+
+    res.redirect("/login");
+    }
+    }
+    );

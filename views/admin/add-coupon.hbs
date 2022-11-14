@@ -1,0 +1,73 @@
+ <div class="height-100 bg-light">
+   <div class="main_div">
+
+  <h2 class="mt-4"><b>Create new Coupon</b></h2>
+  <form action="/admin/add-coupon" method="post">
+
+  <label class="cars fs-3 mt-3">Coupon name:</label>
+  
+  <input class="box1 h-23 w-50 mt-2" type="text" name="couponname" id="couponname" placeholder="Enter coupon name" required /><br>
+
+   <label class="cars fs-3 ">Coupon code:</label>
+  
+  <input class="box1 h-23 w-50 mt-2" type="text" name="couponcode" id="couponcode" placeholder="Enter coupon code" required /><br>
+
+  <label class="fs-3 mt-2">Validity:</label>
+
+  <input class="box1 h-23 w-20 mt-2" type="date" name="fromdate" id="fromdate"required />to
+    <input class="box1 h-23 w-20 " type="date" name="todate" id="todate"required /><br><br>
+
+  <label class="fs-3 ">Discount Percentage:</label>
+
+  <input class="box1 h-23 w-50 " type="int32" name="coupdisc" id="coupdisc" placeholder="0%" required /><br>
+    <button type="submit" class="btn btn-success"><a class="text-white">Submit</a></button>
+  </form><br><br><br>
+
+     <table id="example" class="display" style="width:700px;background-color: black;">
+        <thead>
+            <tr>
+                <th>Coupon Code</th>
+                <th>Coupon name</th>
+                <th>Coupon Validity</th>
+                <th>Coupon discount</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+          {{#each coupon}}
+            <tr>
+                <td>{{this.couponcode}}</td>
+                <td>{{this.couponname}}</td>
+                <td>{{this.fromdate}} to {{this.todate}}</td>
+                <td>{{this.coupdisc}}%</td>
+                <td><a href="/admin/deleteCategory/{{this._id}}"><button class="btn btn-danger" onclick=" return confirm('Are you sure  to delete {{this.name}} from coupon list')">Delete</button></a></td>
+            </tr>
+          {{/each}}
+            </tbody>
+            </table>
+
+</div>
+</div>
+<style>
+.main_div{
+  text-align: center;
+  border-radius: 10px;
+  height: 380px;
+  width: 800px;
+  color: white;
+  background-color: rgb(66, 66, 66);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.box1{
+  border-radius: 10px;
+}
+.btn{
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+}
+</style>

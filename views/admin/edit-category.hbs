@@ -1,0 +1,21 @@
+ <div class="height-100 bg-light">
+  <div class="box__1">
+            
+            <center><div class="contact__form">
+            <h1>Edit Category</h1>
+            <form action="/admin/edit-category/{{category._id}}" method="post">
+               <div class="content">
+                <p>Category name</p>
+                <input type="text" name="name" id="name"  value="{{category.name}}" required>
+            </div> <br> <br>
+            <div class="content">
+            <center> <button class="btn btn-success" type="submit">Save Changes</button></center>
+            {{!-- <input type="submit" value="add"> --}}
+           </div> 
+            </form>
+        </div></center>
+        </div>
+    </div>
+        
+  
+ 

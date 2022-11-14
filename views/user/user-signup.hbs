@@ -1,0 +1,124 @@
+<html>
+<body>
+{{!-- <div class="container" >
+        <div class="row">
+        <div class="col-md-3">
+                      
+        </div>
+                  
+        <div class="col-md-6 main" id="error">
+                      
+            <form action="/signup" method="post" id="form">
+            {{#if signupErr}}
+                   <p class="error">{{signupErr}}</p>
+            {{/if}}
+            <h1> Signup form </h1>
+                              
+            <input class="box" type="text" name="name" id="name" 
+            placeholder="Name"  required /><br>
+                              
+            <input class="box" type="email" name="email" id="email" 
+            placeholder="E-Mail " required /><br>
+                              
+            <input class="box" type="password" name="password" 
+            id="password" placeholder="Password " required/><br>
+                              
+            <input class="box" type="number" name="phone" id="phone"  
+            placeholder="Phone Number " required/><br>
+                        <br>
+            <input type="submit" id="submit"  
+            name="submit" value="submit" /><br>
+                      
+            </form>
+                      
+        </div>
+                  
+    </div>
+    </div> --}} 
+
+ <style>
+.image_bg{
+  background-image: url('/images/elens1.jpg');
+  background-size: cover;
+}
+</style>
+    <section class="vh-100 gradient-custom image_bg">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card  text-dark" style="border-radius: 1rem;background-color: #f9f7f490;">
+          <div class="card-body p-5 text-center">
+            
+            <div class=" pb-1">
+                <div class=" main" >
+             <form action="/signup" method="post" id="form">
+            {{#if signupErr}}
+                   <p class="error">{{signupErr}}</p>
+            {{/if}}
+                <p id="error"></p>
+              <h2 class="fw-bold mb-2 text-uppercase">User Signup</h2>
+              <div class="form-outline form-white ">
+                <label class="fw-bold form-label" for="name">Name</label>
+                <input type="text" id="name" name="name" class="form-control form-control-lg"  required/>
+              </div>
+              <div class="form-outline form-white ">
+                <label class="fw-bold form-label" for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control form-control-lg"  required/>
+              </div>
+
+              <div class="form-outline form-white ">
+                <label class="fw-bold form-label" for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control form-control-lg" required />
+              </div>
+              <div class="form-outline form-white mb-4">
+                <label class="fw-bold form-label" for="phone">Phone</label>
+                <input type="number" id="phone" name="phone" class="form-control form-control-lg" pattern=".{10,}"  required/>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label class="fw-bold form-label" for="referal">Referal Code</label>
+                <input type="referal" id="referal" name="referal" class="form-control form-control-lg"  />
+              </div>
+
+
+              <button class="btn btn-outline-dark fw-bold btn-lg px-5" id="submitDetails" name="submitDetails" type="submit">Signup</button>
+
+            </div>
+
+            
+           </form>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    
+    <script>
+        const name = document.getElementById('name')
+        const password = document.getElementById('password')
+        const phone = document.getElementById('phone')
+        const form = document.getElementById('form')
+        const errorElement = document.getElementById('error')
+        const email = document.getElementById('email')
+        
+       
+        form.addEventListener("submit",(e)=>{
+            let messages = []
+            if(password.value.length<=2) messages.push('Passwords must atleast contain 3 characters ') 
+            if(password.value.length>=20) messages.push('password cant be longer than 19 characters')  
+            if(name.value==null) messages.push('null value cant be considered as a valid username')
+            if(phone.value.length>10) messages.push('Phone nummber must not exceed 10 digits')
+            if(phone.value.length<10) messages.push('Phone nummber must be of 10 digits')
+            if(name.value.trim()=="") messages.push('This kind of Usernames are not allowed')
+            if(password.value.trim()=="") messages.push('Blank passwords are not allowed')
+            if(messages.length>0){
+                 e.preventDefault()
+                 errorElement.innerText = messages.join('+')
+            }  
+        })
+    </script>
+    </body>
+    </html>

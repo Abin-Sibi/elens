@@ -1,0 +1,351 @@
+{{!-- <style>
+  body {
+    background-color: #fbfbfb;
+  }
+
+  @media (min-width: 991.98px) {
+    main {
+      padding-left: 240px;
+    }
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 58px 0 0;
+    /* Height of navbar */
+    box-shadow: 0 2px 5px 0 rgba(245, 241, 241, 0.05), 0 2px 10px 0 rgba(250, 245, 245, 0.05);
+    width: 240px;
+    z-index: 600;
+  }
+
+  @media (max-width: 991.98px) {
+    .sidebar {
+      width: 100%;
+    }
+  }
+
+  .sidebar .active {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  }
+
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Scrollable contents if viewport is shorter than content. */
+  }
+</style> --}}
+
+
+<!-- Sidebar -->
+{{!-- <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-dark">
+  <div class="position-sticky">
+    <div class="list-group list-group-flush mx-3 mt-4">
+      <a href="#" class="list-group-item list-group-item-action py-2 ripple bg-dark border border-white text-white"
+        aria-current="true">
+        <i class="fas fa-tachometer-alt fa-fw me-3"></i><span class=" ">Main dashboard</span>
+      </a>
+      <a href="/admin/usermanage"
+        class="list-group-item list-group-item-action py-2 ripple bg-dark border border-white text-white">
+        <i class="fas fa-chart-area fa-fw me-3"></i><span>User Management</span>
+      </a>
+      <a href="/admin/productmanage"
+        class="list-group-item list-group-item-action py-2 ripple bg-dark border border-white text-white"><i
+          class="fas fa-lock fa-fw me-3"></i><span>Product Management</span></a>
+      <a href="/admin/categorymanage"
+        class="list-group-item list-group-item-action py-2 ripple bg-dark border border-white text-white"><i
+          class="fas fa-chart-line fa-fw me-3"></i><span>Category Management</span></a>
+      <a href="/admin/ordermanage"
+        class="list-group-item list-group-item-action py-2 ripple bg-dark border border-white text-white">
+        <i class="fas fa-chart-pie fa-fw me-3"></i><span>Order Management</span>
+      </a>
+      <a href="/admin/addoffer"
+        class="list-group-item list-group-item-action py-2 ripple bg-dark border border-white text-white">
+        <i class="fas fa-chart-pie fa-fw me-3"></i><span>Add Offers</span>
+      </a>
+      <a href="/admin/add-coupon"
+        class="list-group-item list-group-item-action py-2 ripple bg-dark border border-white text-white">
+        <i class="fas fa-chart-pie fa-fw me-3"></i><span>Add Coupon</span>
+      </a>
+
+      {{#if admin}}
+      <a class="nav-link btn btn-primary" href="/admin/adminlogout">Logout</a>
+      {{else}}
+      <a class="nav-link btn btn-primary" href="/login-admin">Login</a>
+      {{/if}}
+
+    </div>
+  </div>
+</nav> --}}
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+  :root {
+    --header-height: 3rem;
+    --nav-width: 68px;
+    --first-color: #4723D9;
+    --first-color-light: #AFA5D9;
+    --white-color:  #AFA5D9;
+    --body-font: 'Nunito', sans-serif;
+    --normal-font-size: 1rem;
+    --z-fixed: 100
+  }
+
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box
+  }
+
+  body {
+    position: relative;
+    margin: var(--header-height) 0 0 0;
+    padding: 0 1rem;
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    transition: .5s
+  }
+
+  a {
+    text-decoration: none
+  }
+
+  .header {
+    width: 100%;
+    height: var(--header-height);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background-color: var(--white-color);
+    z-index: var(--z-fixed);
+    transition: .5s
+  }
+
+  .header_toggle {
+    color: var(--first-color);
+    font-size: 1.5rem;
+    cursor: pointer
+  }
+
+  .header_img {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden
+  }
+
+  .header_img img {
+    width: 40px
+  }
+
+  .l-navbar {
+    position: fixed;
+    top: 0;
+    left: -30%;
+    width: var(--nav-width);
+    height: 100vh;
+    background-color: var(--first-color);
+    padding: .5rem 1rem 0 0;
+    transition: .5s;
+    z-index: var(--z-fixed)
+  }
+
+  .nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden
+  }
+
+  .nav_logo,
+  .nav_link {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: 1rem;
+    padding: .5rem 0 .5rem 1.5rem
+  }
+
+  .nav_logo {
+    margin-bottom: 2rem
+  }
+
+  .nav_logo-icon {
+    font-size: 1.25rem;
+    color: var(--white-color)
+  }
+
+  .nav_logo-name {
+    color: var(--white-color);
+    font-weight: 700
+  }
+
+  .nav_link {
+    position: relative;
+    color: var(--first-color-light);
+    margin-bottom: 1.5rem;
+    transition: .3s
+  }
+
+  .nav_link:hover {
+    color: var(--white-color)
+  }
+
+  .nav_icon {
+    font-size: 1.25rem
+  }
+
+  .show {
+    left: 0
+  }
+
+  .body-pd {
+    padding-left: calc(var(--nav-width) + 1rem)
+  }
+
+  .active {
+    color: var(--white-color)
+  }
+
+  .active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 2px;
+    height: 32px;
+    background-color: var(--white-color)
+  }
+
+  .height-100 {
+    height: 100vh
+  }
+
+  @media screen and (min-width: 768px) {
+    body {
+      margin: calc(var(--header-height) + 1rem) 0 0 0;
+      padding-left: calc(var(--nav-width) + 2rem)
+    }
+
+    .header {
+      height: calc(var(--header-height) + 1rem);
+      padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
+    }
+
+    .header_img {
+      width: 40px;
+      height: 40px
+    }
+
+    .header_img img {
+      width: 45px
+    }
+
+    .l-navbar {
+      left: 0;
+      padding: 1rem 1rem 0 0
+    }
+
+    .show {
+      width: calc(var(--nav-width) + 156px)
+    }
+
+    .body-pd {
+      padding-left: calc(var(--nav-width) + 188px)
+    }
+  }
+</style>
+
+
+<body id="body-pd">
+  <header class="header" id="header">
+    <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+    <div class="header_img"> <img src="" alt=""> </div>
+  </header>
+  <div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+      <div> <a href="/admin/admin-launch" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span
+            class="nav_logo-name">eLens</span> </a>
+        <div class="nav_list"> <a href="/admin" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span
+              class="nav_name">Dashboard</span> </a>
+          <a href="/admin/usermanage" class="nav_link"> <i class='bx bx-user nav_icon'></i>
+            <span class="nav_name">Users</span> </a>
+          <a href="/admin/productmanage" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span
+              class="nav_name">Products</span> </a>
+          <a href="/admin/categorymanage" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Categories</span>
+          </a>
+          <a href="/admin/ordermanage" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Orders</span> </a>
+            <a href="/admin/addoffer" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span
+                class="nav_name">Offers</span> </a>
+              <a href="/admin/add-coupon" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span
+                class="nav_name">Coupon</span> </a>
+        </div>
+      </div> 
+    
+      <a href="/admin/adminlogout" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span>
+      </a>
+    </nav>
+  </div>
+  <!--Container Main start-->
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+
+      const showNavbar = (toggleId, navId, bodyId, headerId) => {
+        const toggle = document.getElementById(toggleId),
+          nav = document.getElementById(navId),
+          bodypd = document.getElementById(bodyId),
+          headerpd = document.getElementById(headerId)
+
+        // Validate that all variables exist
+        if (toggle && nav && bodypd && headerpd) {
+          toggle.addEventListener('click', () => {
+            // show navbar
+            nav.classList.toggle('show')
+            // change icon
+            toggle.classList.toggle('bx-x')
+            // add padding to body
+            bodypd.classList.toggle('body-pd')
+            // add padding to header
+            headerpd.classList.toggle('body-pd')
+          })
+        }
+      }
+
+      showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
+
+      /*===== LINK ACTIVE =====*/
+      const linkColor = document.querySelectorAll('.nav_link')
+
+      function colorLink() {
+        if (linkColor) {
+          linkColor.forEach(l => l.classList.remove('active'))
+          this.classList.add('active')
+        }
+      }
+      linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+      // Your code to run since DOM is loaded and ready
+    });
+  </script>

@@ -1,0 +1,41 @@
+
+
+{{#if fivestat}}
+{{!-- <p>{{fivestat}}</p> --}}
+{{#each coupon}}
+<div>
+    {{!-- <p>{{five}}</p> --}}
+    You have got a coupon . Use the code to buy products and get {{this.coupdisc}}% discount!!!!!!!
+    </div>
+<div class="couponbody" style="position: absolute;
+  top: 50%; right: 50%;border-radius:8px;
+  transform: translate(50%,-50%);">
+    <h2 style="background-color: black;color:aliceblue;border-radius:8px; text-align: center;">COUPON</h2>
+    <div style="height: 30px; width: 200px;text-align: center;">
+        <p class="code">{{this.couponcode}}</p>
+    </div>
+    <h5 class="date">Expiry date:<br><small>{{this.fromdate}} to {{this.todate}} </small></h5>
+</div>
+
+
+{{/each}}
+
+{{else}}
+<center><b><h1>No rewards Yet</h1></b></center>
+
+{{/if}}
+
+
+
+<style>
+    .couponbody{
+         background: linear-gradient(30deg, rgb(135, 77, 216), rgb(95, 8, 57)) !important;
+    }
+    .code{
+        color: aliceblue;
+    }
+    .date{
+        text-align: center;
+        color: aliceblue;
+    }
+</style>

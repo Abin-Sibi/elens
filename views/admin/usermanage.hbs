@@ -1,0 +1,129 @@
+<main style="margin-top: 58px;">
+  <div class="container pt-4">
+    <style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+ <div class="height-100 bg-light">
+<form action="/admin/size" method="post" id="s">
+               <select name="size" id="" style="width:80px ;">
+                <option >3</option>
+                <option >5</option>
+                <option >9</option>
+               </select>
+               <button type="submit" class="btn btn-success"> search</button>
+            </form>
+<section>
+  <div class="container">
+   <center> <h1>Manage Users</h1> </center>
+    <table class="table" id="userTable">
+      <thead>
+        <tr>
+          {{!-- <th>#</th> --}}
+          <th>Name</th>
+          <th>Email</th>
+          <th>Block/Unblock</th>
+          {{!-- <th>Mob</th> --}}
+          
+        </tr>
+      </thead>
+      <tbody>
+        {{#each user}}
+        <tr>
+          {{!-- <th scope="row">1</th> --}}
+          <td>{{this.name}}</td>
+          <td>{{this.email}}</td>
+        {{#if this.blocked}}
+                    <td>
+                        <label class="switch">
+                            <a href="/admin/changestatus?id={{this._id}}"
+                             onclick="return confirm('Do you want to enable the user : {{this.name}}  ?')">
+                            <input type="checkbox"><span class="slider round"></span></a>
+                        </label>
+                    </td>
+                    {{else}}
+                    <td>
+                        <label class="switch">
+                            <a href="/admin/changestatus?id={{this._id}}" 
+                            onclick="return confirm('Do you want to disable the user : {{this.name}}  ?')">
+                            <input type="checkbox" checked="true"><span class="slider round"></span></a>
+                        </label>
+                    </td>
+                    {{/if}}
+          {{!-- <td>{{this.phone}}</td> --}}
+         
+
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>
+<li class="page-item current-page" style="width:40px"><a class="page-link" href="/admin/usermanage/1">1</a></li>
+                  <li class="page-item current-page" style="width:40px"><a class="page-link"  href="/admin/usermanage/2" >2</a></li>
+  </div>
+    
+{{!-- <script>
+    $(function () {
+      $('#userTable').DataTable();
+    });
+  </script> --}}
+
+

@@ -1,0 +1,233 @@
+<style>
+    .couponbody {
+        background: linear-gradient(30deg, rgb(135, 77, 216), rgb(95, 8, 57)) !important;
+    }
+
+    .code {
+        color: aliceblue;
+    }
+
+    .date {
+        text-align: center;
+        color: aliceblue;
+    }
+</style>
+
+<div class="container" style="margin-top: 10rem;">
+    <div class="row">
+        <div class="col-md-4 h-25 text-center" style="border: 2px solid black; border-radius: 10px;">
+            <h1>User Profile</h1>
+            <div class="rounded-circle "
+                style="height: 144px; width: 151px;margin-left: auto; margin-top: 20px;margin-right: auto; background-image: url('https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80');background-size: cover;">
+            </div>
+            <h5 class="mt-3 text-dark"><b>Referal Code: </b>{{profile._id}}</h5>
+            <h5 class="mt-3 text-dark"><b>Name: </b>{{profile.name}}</h5>
+            <h5 class=" text-dark"><b>Email: </b>{{profile.email}}</h5>
+            <h5 class=" text-dark"><b>Phone: </b>{{profile.phone}}</h5>
+            {{#if profile.wallet}}
+            <h5 class=" text-dark"><b>In your wallet: </b>{{profile.wallet}}</h5>
+            {{else}}
+            <h5>No Wallet Yet</h5>
+            {{/if}}
+            <a href="/password" class="btn btn-danger m-5">Change Password</a>
+        </div><br>
+        <div class="col-md-8 text-center"><br>
+            <button class="btn btn-primary" onclick="addressButton()">Add Address</button><br><br>
+            <div class="changeAddress" style="display: none;">
+                <form action="/user-address" method="post" id="form">
+                    <div class="col-md-6 border border-5">
+                        <br>
+
+                        <div class="col-xs-9"> <br>
+
+                            <div class="form-group">
+                                <input type="text" name="userId" id="" value="{{user._id}}" hidden>
+                                <label for="inputname">Name</label>
+                                <input type="text" class="form-control form-control-large" name="name" id="inputname"
+                                    placeholder="Enter name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress1">Street address 1</label>
+                                <input type="text" class="form-control form-control-large" name="address"
+                                    id="inputAddress" placeholder="Enter address" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPhone">Phone:</label>
+                                <input type="text" class="form-control form-control-large" name="phone" id="inputPhone"
+                                    placeholder="Enter Phone no:" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="form-group">
+                                        <label for="inputZip">PIN Code</label>
+                                        <input type="number" class="form-control form-control-small" name="pin" id="pin"
+                                            placeholder="Enter pin" required>
+                                    </div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="form-group">
+                                        <label for="inputCity">City</label>
+                                        <input type="text" class="form-control" id="inputCity" name="city"
+                                            placeholder="Enter city" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputState" class="control-label">State</label>
+                                <select class="form-control form-control-large" name="state" id="state" required>
+                                    <option>Select state</option>
+                                    <option>KERALA</option>
+                                    <option>KARNATAKA</option>
+                                    <option>MAHARASHTRA</option>
+                                    <option>TAMIL NADU</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <input type="submit" class="btn btn-primary w-100" id="submit" name="submit"
+                            value="submit" /><br><br>
+                    </div><br>
+
+                </form>
+            </div>
+
+            {{!-- <a href="">rewards</a> --}}
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                onclick="viewOffer()">
+                Rewards
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="hello">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table mt-5" id="addressTable">
+    <thead>
+        <tr>
+            <th>Address</th>
+
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each address}}
+        <tr>
+            <td>{{this.name}},<br>{{this.address}},<br>{{this.city}},{{this.pin}},<br>{{this.state}}
+            </td>
+            <td>
+                {{!-- <a href="edit-address/{{this._id}}" class="btn btn-primary">Edit</a> --}}
+                <a href="delete-address/{{this._id}}" class="btn btn-danger"
+                    onclick="return confirm('Sure you want to remove Address')">Delete</a>
+            </td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let address = document.querySelector('.changeAddress')
+    isAddress = true
+    function addressButton() {
+        if (isAddress) {
+            address.style.display = "block"
+            isAddress = false
+        }else{
+            address.style.display = "none"
+            isAddress = true
+        }
+    }
+</script>
+<script>
+    function myFunction() {
+        // Get the text field
+        var copyText = document.getElementById("myInput")
+        // Select the text field
+        copyText.click();
+         // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.innerHTML);
+        // Alert the copied text
+        alert("Copied the text: " + copyText.innerHTML);
+    }
+</script>
+<script>
+    function viewOffer() {
+
+        let hi = document.getElementById('hello')
+        hi.innerHTML = ' '
+        $.ajax({
+            url: '/rewards',
+            method: 'get',
+            success: (cop) => {
+                console.log(cop)
+                if (cop[0].fivestat == false) {
+                    hi.innerHTML +=
+                        `<center>NO REWARDS YET!!!</center>`
+                } else {
+
+                    cop.forEach((element) => {
+
+                        hi.innerHTML += `
+                 
+    <div  class="couponbody mb-3 pb-3" style="border-radius:8px;">
+                    <h2 class="p-1" style="background-color: black;color:aliceblue;border-radius:8px; text-align: center;">COUPON</h2>
+                    <div style="height: 30px; width: 200px;text-align: center;">
+                    
+                    </div>
+                    <center><h4 class="btn code text-success " id="myInput" onclick="myFunction()">${element.couponcode}
+                    </h4></center>
+                    <h5 class="date">Expiry date:<br><small>${element.fromdate} to ${element.todate} </small></h5>
+                    </div> `
+                    }
+                    )
+                }
+            }
+
+        })
+
+    }
+</script>
+
+<script>
+        const name = document.getElementById('name')
+        const password = document.getElementById('password')
+        const form = document.getElementById('form')
+        const errorElement = document.getElementById('error')
+        const email = document.getElementById('email')
+        
+       
+        form.addEventListener("submit",(e)=>{
+            let messages = []
+            if(password.value.length<=2) messages.push('Passwords must atleast contain 3 characters ') 
+            if(password.value.length>=20) messages.push('password cant be longer than 19 characters')  
+            if(name.value==null) messages.push('null value cant be considered as a valid username')
+            if(name.value.trim()=="") messages.push('This kind of Usernames are not allowed')
+            if(password.value.trim()=="") messages.push('Blank passwords are not allowed')
+            if(messages.length>0){
+                 e.preventDefault()
+                 errorElement.innerText = messages.join('+')
+            }  
+        })
+    </script>

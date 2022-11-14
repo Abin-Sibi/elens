@@ -1,0 +1,361 @@
+<style>
+  .order-card {
+    color: #fff;
+}
+
+.bg-c-blue {
+    background: linear-gradient(45deg,#4099ff,#73b4ff);
+}
+
+.bg-c-green {
+    background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+}
+
+.bg-c-yellow {
+    background: linear-gradient(45deg,#FFB64D,#ffcb80);
+}
+
+.bg-c-pink {
+    background: linear-gradient(45deg,#FF5370,#ff869a);
+}
+
+
+.card {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    border: none;
+    margin-bottom: 30px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.card .card-block {
+    padding: 25px;
+}
+
+.order-card i {
+    font-size: 26px;
+}
+
+.f-left {
+    float: left;
+}
+
+.f-right {
+    float: right;
+}
+</style>
+
+<!--Main Navigation-->
+<div class="height-100 bg-light">
+  <div>
+    <center>
+      <h1>Admin Dashboard</h1>
+    </center>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-blue order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Users</h6>
+                    <h2 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>{{Users}}</span></h2>
+                    <p class="m-b-0">Total Users signup<span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-green order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Products</h6>
+                    <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span>{{Products}}</span></h2>
+                    <p class="m-b-0">Total Products added<span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Orders</h6>
+                    <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>{{Orders}}</span></h2>
+                    <p class="m-b-0">Total Orders Received<span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-pink order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Orders Received</h6>
+                    <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>486</span></h2>
+                    <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+    <div>
+      <center><a href="/admin/salesreport" class="btn btn-success" style="text-decoration: none;">Sales Report</a></center>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="">
+            <div class="bg-light text-center rounded p-4">
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Orders</h6>
+              </div>
+              <canvas id="chart1"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="">
+            <div class="bg-light text-center rounded p-4 mx-auto">
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Weekly Sales</h6>
+              </div>
+              <canvas id="weeklysales"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="">
+            <div class="bg-light text-center rounded p-4">
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Monthly Sales</h6>
+              </div>
+              <canvas id="monthlysales"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="">
+            <div class="bg-light text-center rounded p-4">
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Yearly Sales</h6>
+              </div>
+              <canvas id="yearlySales"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+<script src="/javascripts/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  let myChart = document.getElementById('chart1')
+  fetch('/admin/admin-launch/day', {
+    method: 'get',
+  }).then((val) => val.json())
+    .then((data) => {
+      console.log(data);
+      let xaxis = []
+      let countss = []
+      for (const val of data) {
+        let date = `${val.detail.day}/${val.detail.month}/${val.detail.year}`
+        xaxis.push(date)
+        countss.push(val.count)
+      }
+
+      const masspopChart = new Chart(myChart, {
+        type: 'bar',
+        data: {
+          labels: [...xaxis],
+          datasets: [{
+            label: 'Number of orders',
+            data: [...countss],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(245, 125, 75, 1.2)',
+              'rgb(255, 99, 132)',
+              'rgb(54, 162, 235)',
+              'rgb(255, 205, 86)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      })
+    })
+
+
+  let weekly = [0, 0, 0, 0, 0, 0, 0]
+  let yearName = []
+  let yearly = []
+  let weekName = ["Sunday", "Monday", "Tuesday", "WednesDay", "Thursday", "Friday", "Saturday"]
+  let monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  let monthlyProfit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  $.ajax({
+    type: "post",
+    url: "/admin/admin-launch/graphdata",
+    success: (data) => {
+      for (i = 0; i < data.data.weeklySales.length; ++i) {
+
+        switch (data.data.weeklySales[i].date) {
+
+          case 1:
+            weekly[0] = data.data.weeklySales[i].total
+            break;
+          case 2:
+            weekly[1] = data.data.weeklySales[i].total
+            break;
+          case 3:
+            weekly[2] = data.data.weeklySales[i].total
+            break;
+          case 4:
+            weekly[3] = data.data.weeklySales[i].total
+            break;
+          case 5:
+            weekly[4] = data.data.weeklySales[i].total
+            break;
+          case 6:
+            weekly[5] = data.data.weeklySales[i].total
+            break;
+          case 7: weekly[6] = data.data.weeklySales[i].total
+            break;
+        }
+      }
+      for (i = 0; i < data.data.monthlySales.length; ++i) {
+
+        switch (data.data.monthlySales[i].month) {
+          case 1:
+            monthlyProfit[0] = data.data.monthlySales[i].total
+            break;
+          case 2:
+            monthlyProfit[1] = data.data.monthlySales[i].total
+            break;
+          case 3:
+            monthlyProfit[2] = data.data.monthlySales[i].total
+            break;
+          case 4:
+            monthlyProfit[3] = data.data.monthlySales[i].total
+            break;
+          case 5:
+            monthlyProfit[4] = data.data.monthlySales[i].total
+            break;
+          case 6:
+            monthlyProfit[5] = data.data.monthlySales[i].total
+            break;
+          case 7:
+            monthlyProfit[6] = data.data.monthlySales[i].total
+            break;
+          case 8:
+            monthlyProfit[7] = data.data.monthlySales[i].total
+            break;
+          case 9:
+            monthlyProfit[8] = data.data.monthlySales[i].total
+            break;
+          case 10:
+            monthlyProfit[9] = data.data.monthlySales[i].total
+            break;
+          case 11:
+            monthlyProfit[10] = data.data.monthlySales[i].total
+            break;
+          case 12:
+            monthlyProfit[11] = data.data.monthlySales[i].total
+            break;
+        }
+      }
+      for (i = 0; i < data.data.yearlySales.length; ++i) {
+        yearName.push(data.data.yearlySales[i].year)
+        yearly.push(data.data.yearlySales[i].total)
+      }
+      const yearlysales = new Chart(
+        document.getElementById('yearlySales'),
+        yearlyconfig
+      );
+      const weeklysales = new Chart(
+        document.getElementById('weeklysales'),
+        config
+      );
+      const monthlysales = new Chart(
+        document.getElementById('monthlysales'),
+        yeralyconfig
+      );
+    }
+  });
+  //weekly sales
+
+  const labels = weekName;
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Weekly sales',
+      backgroundColor: 'blue',
+      borderColor: 'blue',
+      data: weekly,
+    }]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {}
+  };
+  //monthly Sales
+  const months = monthName;
+
+  const data1 = {
+    labels: months,
+    datasets: [{
+      label: 'Monthly sales',
+      backgroundColor: "red",
+      borderColor: 'red',
+      data: monthlyProfit,
+    }]
+  };
+
+  const yeralyconfig = {
+    type: 'bar',
+    data: data1,
+    options: {}
+  };
+  //yearly sales
+  const yearlyLabel = yearName;
+
+  const data2 = {
+    labels: yearlyLabel,
+    datasets: [{
+      label: 'Yearly sales',
+      backgroundColor: 'green',
+      borderColor: 'green',
+      data: yearly,
+    }]
+  };
+
+  const yearlyconfig = {
+    type: 'bar',
+    data: data2,
+    options: {}
+  };
+
+</script>

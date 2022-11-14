@@ -1,0 +1,33 @@
+ <div class="height-100 bg-light">
+   <center><div class="section__1" style="">
+             <p style="color: rgb(223, 23, 23) ; font-size:22px;font-weight:600;">{{admin__msg}}</p><br>
+         <a class="btn btn-success" href="/admin/add-category">Add Category</a><br><br>
+            {{#if data}}
+           <table id="example" class="display" style="width:500px">
+        <thead>
+            <tr>
+                <th>Category name</th>
+                <th>Offer %</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+{{#each data}}
+            <tr>
+                <td>{{this.name}}</td>
+                <td>{{this.offer}}</td>
+                <td><a href="/admin/edit-category/{{this._id}}"><button class="btn btn-warning">Edit</button></a></td>
+                <td><a href="/admin/deleteCategory/{{this._id}}"><button class="btn btn-danger" onclick=" return confirm('Are you sure do you really want to delete {{this.name}} from category list')">Delete</button></a></td>
+            </tr>
+ {{/each}}
+            </tbody>
+            </table>
+            {{else}}
+            <center> <h1>No data to show</h1></center>
+            {{/if}}
+            
+        </div>
+    </center>
+  </div>
+ 

@@ -1,0 +1,436 @@
+<style>
+  body {
+    font-family: 'open sans';
+    overflow-x: hidden;
+    background: linear-gradient(30deg, rgb(249, 247, 247), rgb(115, 147, 147)) !important;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .preview {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: 996px) {
+    .preview {
+      margin-bottom: 20px;
+    }
+  }
+
+  .preview-pic {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+
+  .preview-thumbnail.nav-tabs {
+    border: none;
+    margin-top: 15px;
+  }
+
+  .preview-thumbnail.nav-tabs li {
+    width: 18%;
+    margin-right: 2.5%;
+  }
+
+  .preview-thumbnail.nav-tabs li img {
+    max-width: 100%;
+    display: block;
+  }
+
+  .preview-thumbnail.nav-tabs li a {
+    padding: 0;
+    margin: 0;
+  }
+
+  .preview-thumbnail.nav-tabs li:last-of-type {
+    margin-right: 0;
+  }
+
+  .tab-content {
+    overflow: hidden;
+  }
+
+  .tab-content img {
+    width: 100%;
+    -webkit-animation-name: opacity;
+    animation-name: opacity;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+  }
+
+  .card {
+    margin-top: 50px;
+    margin-left: 50px;
+    background: linear-gradient(270deg, #1ddeb4 0%, #0088ff 100%) !important;
+    padding: 3em;
+    line-height: 1.5em;
+    max-width: 1200px;
+  }
+
+  @media screen and (min-width: 997px) {
+    .wrapper {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+    }
+  }
+
+  .details {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+
+
+  .product-title,
+  .price,
+  .sizes,
+  .colors {
+    text-transform: UPPERCASE;
+    font-weight: bold;
+  }
+
+  .checked,
+  .price span {
+    color: #ff9f1a;
+  }
+
+  .product-title,
+  .rating,
+  .product-description,
+  .price,
+  .vote,
+  .sizes {
+    color: bisque;
+    margin-bottom: 15px;
+  }
+
+  .product-title {
+    margin-top: 0;
+  }
+
+  .size {
+    margin-right: 10px;
+  }
+
+  .size:first-of-type {
+    margin-left: 40px;
+  }
+
+  .color {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    height: 2em;
+    width: 2em;
+    border-radius: 2px;
+  }
+
+  .color:first-of-type {
+    margin-left: 20px;
+  }
+
+  .add-to-cart,
+  .like {
+    background: #ff9f1a;
+    padding: 1.2em 1.5em;
+    border: none;
+    text-transform: UPPERCASE;
+    font-weight: bold;
+    color: #fff;
+    -webkit-transition: background .3s ease;
+    transition: background .3s ease;
+  }
+
+  .add-to-cart:hover,
+  .like:hover {
+    background: #b36800;
+    color: #fff;
+  }
+/////////////////imgzoom///////////////////////
+
+        section.product-img{
+             position: relative;
+             width: 40%;
+         }
+         
+        section.product-img img{
+             position: relative;
+             width: 100%;
+             height: auto;
+         }
+        section.product-details{
+             position: relative;
+             width: 60%;
+         }
+         .magnifier-lens{
+             position: absolute;
+             width: 150px;
+             height: 100px;
+             background-color: #ff980030;
+             border: .1px solid var(--orange);
+             opacity: 0;
+         }
+         .magnifier-lens.active{
+             opacity: 1;
+         }
+         .magnified-image{
+          margin-left: 100px;
+          margin-bottom: 100px;
+           position: absolute;
+           width: 600px;
+           height: 600px;
+           background-color: #ff980030;
+           border: .1px solid var(--orange);
+           opacity: 0;
+         }
+         .magnified-image.active{
+     opacity: 1;
+         }
+</style>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+{{!--
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script> --}}
+<!------ Include the above in your HEAD tag ---------->
+
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>eCommerce Product Detail</title>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+
+</head>
+
+<body >
+
+
+  <div class="container " style="margin-top: 8rem;">
+    <div class="card">
+      <div class="container-fliud">
+        <div class="wrapper row">
+          <div class="preview col-md-6">
+
+            <div class="preview-pic">
+               <section class="product-img">
+              <img id="mainImg" src="/product-image/{{product._id}}.png" />
+              <div class="magnifier-lens"></div>
+        </section>
+{{!--               
+              
+              <div class="tab-pane " id="img-container">
+                <img id="mainImg" src="/product-image/{{product._id}}.png" />
+              </div> --}}
+            </div>
+            
+
+              <ul class="preview-thumbnail  nav nav-tabs">
+                <li><a data-target="#pic-2" data-toggle="tab"><img  class="small-img"
+                      src="/product-image/{{product._id}}.png" /></a></li>
+                <li ><a data-target="#pic-1" data-toggle="tab"><img class="small-img"
+                      src="/product-image/{{product._id}}1.png" /></a></li>
+                <li><a data-target="#pic-2" data-toggle="tab"><img  class="small-img"
+                      src="/product-image/{{product._id}}2.png" /></a></li>
+                <li ><a data-target="#pic-3" data-toggle="tab"><img class="small-img"
+                      src="/product-image/{{product._id}}3.png" /></a></li>
+
+              </ul>
+            
+
+
+          </div>
+          <div class="details col-md-6">
+
+            <section class="product-details">
+               <div class="magnified-image"></div>
+         <h3 class="product-title">{{product.productname}}</h3>
+            <div class="rating">
+              <div class="stars">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+              </div>
+              <span class="review-no">41 reviews</span>
+            </div>
+            <p class="product-description">{{product.desc}}</p>
+            <h4 class="price">current price: <span>₹{{product.price}}</span></h4>
+            <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+          
+           
+            <div class="action">
+              {{!-- <a href="/add-cart/{{product._id}}">{{product._id}}</a> --}}
+              <button id="cartcount" onclick="addToCart('{{product._id}}')" class="add-to-cart btn btn-dark"
+                type="button">Add to cart</button>
+              <button class="like btn btn-dark" type="button"><span class="fa fa-heart"></span></button>
+            </div>
+               
+        </section>
+   
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div class="pop__up__box hide">
+    <div class="the__box">
+      <center>
+        <h3>Added to Cart !</h3>
+      </center>
+    </div>
+    <div class="the__bottom__div mt-3">
+      <center><a href="" class="btn btn-success">Hurray !</a></center>
+    </div>
+  </div>
+
+</body>
+<script>
+
+  var temp
+    var main__img = document.getElementById('mainImg')
+    var small__img = document.getElementsByClassName('small-img')
+    small__img[0].onclick=()=>{
+         temp = main__img.src
+         main__img.src = small__img[0].src
+         small__img[0].src = temp
+         
+    }
+    small__img[1].onclick=()=>{
+        temp = main__img.src
+         main__img.src = small__img[1].src
+         small__img[1].src = temp
+    }
+    small__img[2].onclick=()=>{
+          temp = main__img.src
+         main__img.src = small__img[2].src
+         small__img[2].src = temp
+    }
+     small__img[3].onclick=()=>{
+          temp = main__img.src
+         main__img.src = small__img[3].src
+         small__img[3].src = temp
+    }
+
+ // function change_image(image) {
+
+  //  var container = document.getElementById("main-image");
+
+  //  container.src = image.src;
+ // }
+ // document.addEventListener("DOMContentLoaded", function (event) {
+
+ // });
+
+</script>
+
+<script>
+    const lens = document.querySelector('.magnifier-lens');
+const product_image= document.querySelector('.product-img img');
+const magnified_image = document.querySelector('.magnified-image');
+// const image_box = document.querySelector('.image_box')
+
+function magnify(product_image,magnified_image){
+    lens.addEventListener('mousemove',moveLens)
+    lens.addEventListener('mouseout',leaveLens)
+    product_image.addEventListener('mousemove',moveLens)
+    // image_box.addEventListener('mouseout',leaveLens)
+    //when mouse is taken out of the image
+   
+}
+
+function moveLens(e){
+   // console.log("x :" +e.pageX+ "Y :" + e.pageY) 
+    let x,y,cx,cy;
+    //get the position of the cursor
+    const product_image_rect = product_image.getBoundingClientRect();
+    x = e.pageX - product_image_rect.left - lens.offsetWidth/2;
+    y = e.pageY - product_image_rect.top - lens.offsetHeight/2;
+
+    let max_xpos = product_image_rect.width -lens.offsetWidth;
+    let max_ypos = product_image_rect.height -lens.offsetHeight;
+
+    if(x > max_xpos) x = max_xpos
+    if(x < 0) x = 0
+    if(y > max_ypos) y = max_ypos
+    if(y < 0 ) y = 0
+    lens.style = `top:${y}px; left:${x}px`
+
+    // calculate the magnified __img and lens's aspect ratio
+    cx = magnified_image.offsetWidth / lens.offsetWidth;
+    cy = magnified_image.offsetHeight / lens.offsetHeight;
+    magnified_image.style.backgroundRepeat = `no-repeat`
+    magnified_image.style= `background: url('${product_image.src}')
+                -${x * cx}px -${y * cy}px /
+                ${product_image_rect.width * cx}px ${product_image_rect.height * cy}px                         
+    `;
+    lens.classList.add('active')
+    magnified_image.classList.add('active')
+    // lens.classList.remove('active')
+    
+}
+function leaveLens(){
+        lens.classList.remove('active')  
+        magnified_image.classList.remove('active')
+    }
+magnify(product_image,magnified_image);
+</script>
+
+
+<style>
+  .pop__up__box {
+    position: absolute;
+    top: 30%;
+    left: 32%;
+    justify-content: center;
+    height: 200px;
+    width: 30vw;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.5), -2px -2px 5px 1px rgba(0, 0, 0, 0.5);
+  }
+
+  .the__box h3 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ff9f1a;
+    background-color: whitesmoke;
+  }
+
+  .hide {
+    display: none;
+  }
+</style>
+
+

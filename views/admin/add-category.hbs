@@ -1,0 +1,41 @@
+
+ <div class="height-100 bg-light">
+    
+    <div class="box__1">
+            <p style="color: green ; font-size:22px;font-weight:600;">{{admin__msg}}</p>
+            <div class="available__categories">
+                {{#if data}}
+               <center><h1>Already available Categories</h1></center> 
+               
+                  <div style="margin-left: 650px;">
+                  <ol>
+                    {{#each data}}
+                    <li>{{this.name}}</li>
+                    {{/each}}
+                </ol>
+                {{else}}
+                <h1>There is no Categories </h1>
+                {{/if}}
+               </div>
+               
+            </div><br><br>
+        
+    
+      <center> <div class="contact__form">
+            <h1>Add Category</h1>
+            <form action="/admin/add-category"  enctype="multipart/form-data" method="post" id="form">
+               <div class="content">
+                <p>Category name</p>
+                <input type="text" name="name" id="name" placeholder=" Category name" required><br>
+                <input style="width: 500px;" class="form-control" type="file" name="image" id="id_image1" 
+            required /><br>
+            </div> 
+            <div class="content">
+            <center> <button class="btn btn-success" type="submit">Add Category</button></center>
+            {{!-- <input type="submit" value="add"> --}}
+           </div> 
+            </form>
+        </div></center> 
+  </div>
+  </div>
+ 
